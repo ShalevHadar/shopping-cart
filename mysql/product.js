@@ -70,7 +70,25 @@ const editProductByID = async (data, productId) => {
 const searchTermInDB = async (term) => {
   return new Promise((resolve, reject) => {
     dbConnection.query(
-      `select * from product where title LIKE '${term}%';`,
+      `select * from product where title LIKE '%${term}%';`,
+      (err, results, field) => {
+        if (err) {
+          reject(err);
+        }
+        if (results.affectedRows == 0) {
+          reject(new Error(`No products with this id: ${productId}`));
+        } else {
+          resolve(results);
+        }
+      }
+    );
+  });
+};
+
+const searchProductByIdInDB = async (productId) => {
+  return new Promise((resolve, reject) => {
+    dbConnection.query(
+      `select * from product where product_id=${productId};`,
       (err, results, field) => {
         if (err) {
           reject(err);
@@ -91,4 +109,5 @@ module.exports = {
   deleteProductFromDB,
   editProductByID,
   searchTermInDB,
+  searchProductByIdInDB,
 };

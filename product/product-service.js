@@ -4,6 +4,7 @@ const {
   deleteProductFromDB,
   editProductByID,
   searchTermInDB,
+  searchProductByIdInDB,
 } = require("../mysql/product");
 
 const addProduct = async (productData) => {
@@ -36,10 +37,16 @@ const searchForProductByTerm = async (term) => {
   return results;
 };
 
+const searchProductByID = async (productId) => {
+  const product = await searchProductByIdInDB(productId);
+  return product;
+};
+
 module.exports = {
   addProduct,
   getAllProducts,
   deleteProduct,
   editProduct,
   searchForProductByTerm,
+  searchProductByID,
 };

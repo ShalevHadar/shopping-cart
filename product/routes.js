@@ -7,6 +7,7 @@ const {
   deleteProduct,
   editProduct,
   searchForProductByTerm,
+  searchProductByID,
 } = require("./product-service");
 const router = express.Router();
 
@@ -60,6 +61,16 @@ router.get("/api/product/term", verifyToken, async (req, res, next) => {
     const searchTerm = req.body.term;
     const results = await searchForProductByTerm(searchTerm);
     res.status(200).json({ message: "Success, found all results", results });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
+
+router.get("/api/product/:id", verifyToken, async (req, res, next) => {
+  try {
+    const productId = req.params.id;
+    const product = await searchProductByID(productId);
+    res.status(200).json({ message: "Success, product was found", product });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
