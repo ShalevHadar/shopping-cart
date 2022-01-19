@@ -6,11 +6,13 @@ const db = require("./mysql/client");
 const port = process.env.PORT;
 const app = express();
 const userRoutes = require("./user/routes");
+const productRoutes = require("./product/routes");
 
 // middleware
 app.use(express.json());
 app.use(cors());
 app.use(userRoutes);
+app.use(productRoutes);
 
 // connection to DB:
 

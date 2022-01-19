@@ -6,7 +6,7 @@ const createToken = (userData) => {
   const token = jwt.sign({ user, role }, secret, {
     expiresIn: "2h",
   });
-  return token;
+  return `Bearer ${token}`;
 };
 
 module.exports = {
