@@ -1,5 +1,6 @@
 const express = require("express");
-const { registerUser } = require("./user-service");
+const { createToken } = require("../token/token");
+const { registerUser, ValidateUser } = require("./user-service");
 const router = express.Router();
 
 router.post("/api/user/register", async (req, res) => {
@@ -15,10 +16,10 @@ router.post("/api/user/register", async (req, res) => {
 router.post("/api/user/login", async (req, res) => {
   try {
     const data = req.body;
-    console.log(data);
+
     const user = await ValidateUser(data);
-    
-    res.status(200).json({ message: "Success, user can login" });
+    const token = await createToken(user);
+    res.status(200).json({ message: "Success, user can login", token });
   } catch (error) {
     res.status(401).json({ message: "Error, user is unauthorized" });
   }
