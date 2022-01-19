@@ -10,7 +10,7 @@ const ValidateUser = async (data) => {
     throw new Error("Username does not exist");
   }
   if (user.password === data.password) {
-    return { user: user.username, role: user.role };
+    return { user: user.username, role: user.role, id: user.user_id };
   } else {
     throw new Error("Password isn't correct");
   }
