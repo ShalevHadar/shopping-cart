@@ -30,4 +30,19 @@ const clearCartByID = async (id) => {
   });
 };
 
-module.exports = { getCaryByIdFromDB, clearCartByID };
+const addProductToCartDB = async (productId, userId) => {
+  return new Promise((resolve, reject) => {
+    dbConnection.query(
+      `insert into cart values (${productId},${userId});`,
+      (err, results, field) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      }
+    );
+  });
+};
+
+module.exports = { getCaryByIdFromDB, clearCartByID, addProductToCartDB };

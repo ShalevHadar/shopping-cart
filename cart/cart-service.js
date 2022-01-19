@@ -1,4 +1,4 @@
-const { getCaryByIdFromDB, clearCartByID } = require("../mysql/cart");
+const { getCaryByIdFromDB, clearCartByID, addProductToCartDB } = require("../mysql/cart");
 
 const getCartById = async (id) => {
   const results = await getCaryByIdFromDB(id);
@@ -12,4 +12,8 @@ const clearCart = async (id) => {
   await clearCartByID(id);
 };
 
-module.exports = { getCartById, clearCart };
+const addProductToCart = async (productId, userId) => {
+  await addProductToCartDB(productId, userId);
+};
+
+module.exports = { getCartById, clearCart, addProductToCart };
