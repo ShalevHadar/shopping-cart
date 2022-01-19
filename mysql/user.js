@@ -6,7 +6,12 @@ const registerUserToDB = async (data) => {
       `INSERT INTO user values (null,'${data.username}','${data.password}', '${data.role}');`,
       (err, results, field) => {
         if (err) {
-          reject(err);
+          if (err.errno === 1265) {
+            reject(
+              new Error("Please fill in role: `admin`, `editor`, `user` ")
+            );
+          }
+          reject(new Error("Conflict, username exists in DB"));
         } else {
           resolve(true);
         }

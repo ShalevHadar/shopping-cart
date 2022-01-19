@@ -9,7 +9,7 @@ router.post("/api/user/register", async (req, res) => {
     await registerUser(data);
     res.status(201).json({ message: "Success, user created" });
   } catch (error) {
-    res.status(409).json({ message: "Conflict, user already exist" });
+    res.status(409).json({ message: error.message });
   }
 });
 

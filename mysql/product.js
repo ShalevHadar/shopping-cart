@@ -6,6 +6,11 @@ const addProductToDB = async (data) => {
       `INSERT INTO product values (null, "${data.title}", ${data.price}, "${data.description}");`,
       (err, results, field) => {
         if (err) {
+          if (err.errno === 1062) {
+            reject(new Error(`Duplicate entry for key ${data.title}`));
+          } else {
+            reject(err);
+          }
           reject(err);
         } else {
           resolve(true);
