@@ -16,12 +16,11 @@ router.post("/api/user/register", async (req, res) => {
 router.post("/api/user/login", async (req, res) => {
   try {
     const data = req.body;
-
     const user = await ValidateUser(data);
     const token = await createToken(user);
     res.status(200).json({ message: "Success, user can login", token });
   } catch (error) {
-    res.status(401).json({ message: "Error, user is unauthorized" });
+    res.status(401).json({ message: error.message });
   }
 });
 

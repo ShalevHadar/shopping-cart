@@ -21,7 +21,7 @@ const getUserByUsername = async (username) => {
       `SELECT * FROM user WHERE username = '${username}' `,
       (err, results, field) => {
         if (err) {
-          reject(err);
+          reject(new Error("Check your username/password - can't find in db"));
         } else {
           resolve(results[0]);
         }

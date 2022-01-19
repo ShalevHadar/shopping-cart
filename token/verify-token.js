@@ -13,7 +13,6 @@ const verifyToken = (req, res, next) => {
   try {
     const decodedToken = jwt.verify(newToken, process.env.TOKEN_KEY);
     req.user = { username: decodedToken.user, role: decodedToken.role };
-    res.local = req.user;
     return next();
   } catch (error) {
     return res.status(401).json({ message: "Unauthorized token" });
