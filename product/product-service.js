@@ -3,6 +3,7 @@ const {
   getAllProductsFromDB,
   deleteProductFromDB,
   editProductByID,
+  searchTermInDB,
 } = require("../mysql/product");
 
 const addProduct = async (productData) => {
@@ -24,8 +25,15 @@ const editProduct = async (data, productId) => {
       throw new Error("price is not a number");
     }
   }
-
   await editProductByID(data, productId);
+};
+
+const searchForProductByTerm = async (term) => {
+  if (!term) {
+    throw new Error("Term is empty, please enter a valid search term");
+  }
+  const results = await searchTermInDB(term);
+  return results;
 };
 
 module.exports = {
@@ -33,4 +41,5 @@ module.exports = {
   getAllProducts,
   deleteProduct,
   editProduct,
+  searchForProductByTerm,
 };
