@@ -2,6 +2,7 @@ const {
   addProductToDB,
   getAllProductsFromDB,
   deleteProductFromDB,
+  editProductByID,
 } = require("../mysql/product");
 
 const addProduct = async (productData) => {
@@ -17,8 +18,19 @@ const deleteProduct = async (productId) => {
   await deleteProductFromDB(productId);
 };
 
+const editProduct = async (data, productId) => {
+  if (data.price) {
+    if (isNaN(data.price)) {
+      throw new Error("price is not a number");
+    }
+  }
+
+  await editProductByID(data, productId);
+};
+
 module.exports = {
   addProduct,
   getAllProducts,
   deleteProduct,
+  editProduct,
 };

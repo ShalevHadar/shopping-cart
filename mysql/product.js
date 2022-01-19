@@ -38,7 +38,26 @@ const deleteProductFromDB = async (productId) => {
         if (results.affectedRows == 0) {
           reject(new Error(`No products with this id: ${productId}`));
         } else {
-          console.log(results);
+          resolve(results);
+        }
+      }
+    );
+  });
+};
+
+const editProductByID = async (data, productId) => {
+  return new Promise((resolve, reject) => {
+    dbConnection.query(
+      `update product set ${data.price ? `price=${data.price} ,` : ""}${
+        data.description ? `description="${data.description}" ,` : ""
+      } ${
+        data.title ? `title="${data.title}"` : ""
+      }where product_id = ${productId};`,
+      (err, results, field) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
           resolve(results);
         }
       }
@@ -50,4 +69,5 @@ module.exports = {
   addProductToDB,
   getAllProductsFromDB,
   deleteProductFromDB,
+  editProductByID,
 };

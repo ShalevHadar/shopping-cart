@@ -5,6 +5,7 @@ const {
   addProduct,
   getAllProducts,
   deleteProduct,
+  editProduct,
 } = require("./product-service");
 const router = express.Router();
 
@@ -38,6 +39,18 @@ router.delete("/api/product/:id", verifyToken, async (req, res, next) => {
     res.status(200).json({ message: "Success, product was deleted" });
   } catch (error) {
     res.status(404).json({ message: error.message });
+  }
+});
+
+router.put("/api/product/:id", verifyToken, async (req, res, next) => {
+  try {
+    const data = req.body;
+    const productId = req.params.id;
+    await validateRole(req.user.role, ["admin", "editor"]);
+    await editProduct(data, productId);
+    res.status(200).json({ message: "Success, product was updated" });
+  } catch (error) {
+    res.status(403).json({ message: error.message });
   }
 });
 
